@@ -1,0 +1,6 @@
+framework module Pods_RxMVVMExampleUITests {
+  umbrella header "Pods-RxMVVMExampleUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
