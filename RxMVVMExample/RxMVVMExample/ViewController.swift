@@ -7,13 +7,28 @@
 //
 
 import UIKit
+import RxSwift
 
 class ViewController: UIViewController {
 
+  let dispose: DisposeBag = DisposeBag()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view, typically from a nib.
-  }
+    
+    var viewModel: TestViewModel = TestViewModel()
+    
+    viewModel.propertyChanged.map { (value) -> String in
+        value + "!!!"
+    }
+    .subscribe { (event) in
+      print(event)
+    }
+    .addDisposableTo(dispose)
+    
+    viewModel.TestDescription = "test"
+}
 
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
