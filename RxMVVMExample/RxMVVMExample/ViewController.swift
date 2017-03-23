@@ -10,24 +10,24 @@ import UIKit
 import RxSwift
 
 class ViewController: UIViewController {
-
-  let dispose: DisposeBag = DisposeBag()
+  
+  let viewModel: TestViewModel = TestViewModel()
   
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view, typically from a nib.
     
-    var viewModel: TestViewModel = TestViewModel()
+    viewModel.propertyChanged
+    .subscribe(onNext: { (bindName) in
+      switch bindName {
+        case .testDescription:
+          print(self.viewModel.testDescription)
+        break
+      }
+    })
+    .addDisposableTo(viewModel.disposeBag)
     
-    viewModel.propertyChanged.map { (value) -> String in
-        value + "!!!"
-    }
-    .subscribe { (event) in
-      print(event)
-    }
-    .addDisposableTo(dispose)
-    
-    viewModel.TestDescription = "test"
+    viewModel.testDescription = "test"
 }
 
   override func didReceiveMemoryWarning() {

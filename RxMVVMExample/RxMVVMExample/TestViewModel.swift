@@ -7,26 +7,17 @@
 //
 
 import Foundation
-import RxSwift
 
-protocol DataBindingProtocol {
-  var propertyChanged: PublishSubject<String> { get set }
+enum TestViewModelType {
+  case testDescription
 }
 
-// init 구현해야함
-struct TestViewModel: DataBindingProtocol {
-  var propertyChanged: PublishSubject<String> = PublishSubject<String>()
+final class TestViewModel: BaseViewModel<TestViewModelType> {
   
-  private var testDescription: String?
-  var TestDescription: String {
-    get {
-      guard let value = testDescription else  { return "" }
-      return value
-    }
-    set(value) {
-      testDescription = value
-      
-      propertyChanged.onNext(value)
+  var testDescription: String = "" {
+    didSet {
+      propertyChanged.onNext(.testDescription)
     }
   }
 }
+
