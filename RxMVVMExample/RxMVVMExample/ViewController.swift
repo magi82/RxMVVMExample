@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
   
   let viewModel: TestViewModel = TestViewModel()
   
@@ -17,15 +17,15 @@ class ViewController: UIViewController {
     super.viewDidLoad()
     // Do any additional setup after loading the view, typically from a nib.
     
-    viewModel.propertyChanged
+    viewModel.PropertyChanged
     .subscribe(onNext: { (bindName) in
       switch bindName {
-        case .testDescription:
+        case .testDescriptionBinding:
           print(self.viewModel.testDescription)
         break
       }
     })
-    .addDisposableTo(viewModel.disposeBag)
+    .addDisposableTo(viewModel.Dispose)
     
     viewModel.testDescription = "test"
 }

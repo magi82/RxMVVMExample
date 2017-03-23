@@ -8,15 +8,15 @@
 
 import Foundation
 
-enum TestViewModelType {
-  case testDescription
+enum TestBindingType {
+  case testDescriptionBinding
 }
 
-final class TestViewModel: BaseViewModel<TestViewModelType> {
+final class TestViewModel: BaseViewModel<TestBindingType> {
   
   var testDescription: String = "" {
     didSet {
-      propertyChanged.onNext(.testDescription)
+      PropertyChanged.onNext(.testDescriptionBinding)
     }
   }
 }

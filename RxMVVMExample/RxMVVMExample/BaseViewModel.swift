@@ -11,11 +11,22 @@ import RxSwift
 
 class BaseViewModel<T> {
   
-  var propertyChanged: PublishSubject<T> = PublishSubject<T>()
-  var disposeBag: DisposeBag = DisposeBag()
+  private let propertyChanged: PublishSubject<T>
+  public var PropertyChanged: PublishSubject<T> {
+    get {
+      return propertyChanged
+    }
+  }
+  
+  private let dispose: DisposeBag
+  public var Dispose: DisposeBag {
+    get {
+      return dispose
+    }
+  }
   
   init() {
     propertyChanged = PublishSubject<T>()
-    disposeBag = DisposeBag()
+    dispose = DisposeBag()
   }
 }
