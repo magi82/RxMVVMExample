@@ -131,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				3D78F14D1E84CB7A00FD2798 /* Cores */,
+				3D78F14E1E84FF3400FD2798 /* Models */,
 				3D1A69571E82747D0025AAE0 /* ViewModels */,
 				3D1A69561E8274670025AAE0 /* Views */,
 				3D1A69281E826C570025AAE0 /* AppDelegate.swift */,
@@ -183,6 +184,13 @@
 				3D0159081E84CB1E0061FCB1 /* DelegateCommand.swift */,
 			);
 			name = Cores;
+			sourceTree = "<group>";
+		};
+		3D78F14E1E84FF3400FD2798 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		DE9C2BE72096DF4A54B9E29F /* Pods */ = {

@@ -9,7 +9,7 @@
 import Foundation
 
 enum TestBindingType {
-  case testDescriptionBinding
+  case testDescriptionBinding(String)
 }
 
 final class TestViewModel: BaseViewModel<TestBindingType> {
@@ -26,7 +26,7 @@ final class TestViewModel: BaseViewModel<TestBindingType> {
   
   var testDescription: String = "" {
     didSet {
-      PropertyChanged.onNext(.testDescriptionBinding)
+      PropertyChanged.onNext(.testDescriptionBinding("test"))
       
       if let command = submitCommand {
         command.raiseCanExecuteChanged()

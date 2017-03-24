@@ -20,8 +20,8 @@ final class ViewController: UIViewController {
     viewModel.PropertyChanged
     .subscribe(onNext: { (bindName) in
       switch bindName {
-        case .testDescriptionBinding:
-          print(self.viewModel.testDescription)
+        case .testDescriptionBinding(let value):
+          print(value)
         break
       }
     })
