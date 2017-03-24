@@ -14,10 +14,41 @@ enum TestBindingType {
 
 final class TestViewModel: BaseViewModel<TestBindingType> {
   
+  // MARK: Initializing
+  
+  override init() {
+    super.init()
+    
+    submitCommand = DelegateCommand<String>(executeParam: executeSubmit, canExecuteParam: canExecuteSubmit)
+  }
+  
+  // MARK: Data Binding
+  
   var testDescription: String = "" {
     didSet {
       PropertyChanged.onNext(.testDescriptionBinding)
     }
+  }
+  
+  // MARK: Command
+  
+  private var submitCommand: DelegateCommand<String>?
+  public var SubmitCommand: DelegateCommand<String>? {
+    get {
+      return submitCommand
+    }
+  }
+  
+  private func executeSubmit(str: String?) {
+    guard let value = str else { return }
+    
+    print(value)
+  }
+  
+  private func canExecuteSubmit(str: String?) -> Bool {
+    guard str != nil else  { return false }
+    
+    return true
   }
 }
 

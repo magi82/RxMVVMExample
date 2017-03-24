@@ -10,7 +10,6 @@ import Foundation
 import RxSwift
 
 class BaseViewModel<T> {
-  
   private let propertyChanged: PublishSubject<T>
   public var PropertyChanged: PublishSubject<T> {
     get {
