@@ -10,6 +10,9 @@ import Foundation
 import RxSwift
 
 class BaseViewModel<T> {
+  
+  // MARK: Properties
+  
   private let propertyChanged: PublishSubject<T>
   public var PropertyChanged: PublishSubject<T> {
     get {
@@ -23,6 +26,8 @@ class BaseViewModel<T> {
       return dispose
     }
   }
+  
+  // MARK: Initializing
   
   init() {
     propertyChanged = PublishSubject<T>()

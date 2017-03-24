@@ -27,15 +27,13 @@ final class ViewController: UIViewController {
     })
     .addDisposableTo(viewModel.Dispose)
     
+    viewModel.SubmitCommand?.CanExecuteActionChanged
+    .subscribe(onNext: { (_) in
+      print("changed")
+    })
+    .addDisposableTo(viewModel.Dispose)
+    
     viewModel.testDescription = "test"
-    
-    if let value = viewModel.SubmitCommand?.canExecute(param: nil) {
-      print(value)
-    }
-    
-    if let value = viewModel.SubmitCommand {
-      value.execute(param: "true")
-    }
 }
 
   override func didReceiveMemoryWarning() {

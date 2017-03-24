@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 final class DelegateCommand<T> {
   
@@ -14,6 +15,13 @@ final class DelegateCommand<T> {
   
   private let executeAction: (T?) -> Void
   private let canExecuteAction: (T?) -> Bool
+  
+  private let canExecuteActionChanged: PublishSubject<Void> = PublishSubject<Void>()
+  public var CanExecuteActionChanged: PublishSubject<Void> {
+    get {
+      return canExecuteActionChanged
+    }
+  }
   
   // MARK: Initializing
   
@@ -37,5 +45,9 @@ final class DelegateCommand<T> {
   
   func canExecute(param: T? = nil) -> Bool {
     return self.canExecuteAction(param)
+  }
+  
+  func raiseCanExecuteChanged() {
+    canExecuteActionChanged.onNext()
   }
 }

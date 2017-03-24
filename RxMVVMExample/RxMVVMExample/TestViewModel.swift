@@ -27,6 +27,10 @@ final class TestViewModel: BaseViewModel<TestBindingType> {
   var testDescription: String = "" {
     didSet {
       PropertyChanged.onNext(.testDescriptionBinding)
+      
+      if let command = submitCommand {
+        command.raiseCanExecuteChanged()
+      }
     }
   }
   
