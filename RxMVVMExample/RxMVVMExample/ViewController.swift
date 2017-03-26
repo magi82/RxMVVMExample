@@ -18,22 +18,24 @@ final class ViewController: UIViewController {
     // Do any additional setup after loading the view, typically from a nib.
     
     viewModel.PropertyChanged
-    .subscribe(onNext: { (bindName) in
-      switch bindName {
-        case .testDescriptionBinding(let value):
+    .subscribe(onNext: { (type) in
+      switch type {
+        case TestBindingType.description(let value):
           print(value)
         break
       }
     })
     .addDisposableTo(viewModel.Dispose)
     
-    viewModel.SubmitCommand?.CanExecuteActionChanged
-    .subscribe(onNext: { (_) in
-      print("changed")
-    })
-    .addDisposableTo(viewModel.Dispose)
+    if let command = viewModel.SubmitCommand {
+      command.CanExecuteActionChanged
+        .subscribe(onNext: { (_) in
+          print("changed")
+        })
+        .addDisposableTo(viewModel.Dispose)
+    }
     
-    viewModel.testDescription = "test"
+    viewModel.testDescription = "hahaha"
 }
 
   override func didReceiveMemoryWarning() {

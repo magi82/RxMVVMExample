@@ -9,10 +9,18 @@
 import Foundation
 import RxSwift
 
-class BaseViewModel<T> {
+protocol DataBindingProtocol {
+  associatedtype V
   
+  func raisePropertyChanged(_: V)
+}
+
+class BaseViewModel<T>: DataBindingProtocol {
+  
+  typealias V = T
+
   // MARK: Properties
-  
+
   private let propertyChanged: PublishSubject<T>
   public var PropertyChanged: PublishSubject<T> {
     get {
@@ -32,5 +40,11 @@ class BaseViewModel<T> {
   init() {
     propertyChanged = PublishSubject<T>()
     dispose = DisposeBag()
+  }
+  
+  // MARK: Method
+  
+  func raisePropertyChanged(_ property: T) {
+    propertyChanged.onNext(property)
   }
 }

@@ -9,10 +9,19 @@
 import Foundation
 
 enum TestBindingType {
-  case testDescriptionBinding(String)
+  case description(String)
 }
 
 final class TestViewModel: BaseViewModel<TestBindingType> {
+  
+  // MARK: Properties
+  
+  private var submitCommand: DelegateCommand<String>?
+  public var SubmitCommand: DelegateCommand<String>? {
+    get {
+      return submitCommand
+    }
+  }
   
   // MARK: Initializing
   
@@ -26,7 +35,7 @@ final class TestViewModel: BaseViewModel<TestBindingType> {
   
   var testDescription: String = "" {
     didSet {
-      PropertyChanged.onNext(.testDescriptionBinding("test"))
+      raisePropertyChanged(TestBindingType.description(testDescription))
       
       if let command = submitCommand {
         command.raiseCanExecuteChanged()
@@ -35,13 +44,6 @@ final class TestViewModel: BaseViewModel<TestBindingType> {
   }
   
   // MARK: Command
-  
-  private var submitCommand: DelegateCommand<String>?
-  public var SubmitCommand: DelegateCommand<String>? {
-    get {
-      return submitCommand
-    }
-  }
   
   private func executeSubmit(str: String?) {
     guard let value = str else { return }

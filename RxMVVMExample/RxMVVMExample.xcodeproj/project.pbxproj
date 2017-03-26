@@ -283,6 +283,7 @@
 				TargetAttributes = {
 					3D1A69241E826C570025AAE0 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = DG52M8T8GR;
 						ProvisioningStyle = Automatic;
 					};
 					3D1A69381E826C570025AAE0 = {
@@ -644,6 +645,7 @@
 			baseConfigurationReference = D46CA6B2BF6E630B6E2F79B4 /* Pods-RxMVVMExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = DG52M8T8GR;
 				INFOPLIST_FILE = RxMVVMExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apayo.RxMVVMExample;
@@ -657,6 +659,7 @@
 			baseConfigurationReference = 89CB04938EFB402DE9B077D1 /* Pods-RxMVVMExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = DG52M8T8GR;
 				INFOPLIST_FILE = RxMVVMExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apayo.RxMVVMExample;

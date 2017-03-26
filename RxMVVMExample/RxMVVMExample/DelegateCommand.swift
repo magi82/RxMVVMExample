@@ -9,7 +9,17 @@
 import Foundation
 import RxSwift
 
-final class DelegateCommand<T> {
+protocol CommandProtocol {
+  associatedtype V
+  
+  func execute(_: V?)
+  func canExecute(_: V?) -> Bool
+  func raiseCanExecuteChanged()
+}
+
+final class DelegateCommand<T>: CommandProtocol {
+
+  typealias V = T
   
   // MARK: Properties
   
@@ -27,7 +37,7 @@ final class DelegateCommand<T> {
   
   init(executeParam: @escaping (T?) -> Void) {
     self.executeAction = executeParam
-    self.canExecuteAction = { (T) in true }
+    self.canExecuteAction = { (_) in true }
   }
   
   init(executeParam: @escaping (T?) -> Void, canExecuteParam: @escaping (T?) -> Bool) {
@@ -37,13 +47,13 @@ final class DelegateCommand<T> {
   
   // MARK: Method
   
-  func execute(param: T? = nil) {
+  func execute(_ param: T? = nil) {
     if self.canExecuteAction(param) {
       self.executeAction(param)
     }
   }
   
-  func canExecute(param: T? = nil) -> Bool {
+  func canExecute(_ param: T? = nil) -> Bool {
     return self.canExecuteAction(param)
   }
   
