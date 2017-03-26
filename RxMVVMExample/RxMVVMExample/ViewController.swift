@@ -7,36 +7,90 @@
 //
 
 import UIKit
+
 import RxSwift
+import RxCocoa
+import Toaster
+import Then
 
 final class ViewController: UIViewController {
   
-  let viewModel: TestViewModel = TestViewModel()
+  // MARK: Properties
+  
+  let viewModel: ToastViewModel = ToastViewModel()
+  
+  // MARK: UI Components
+  
+  @IBOutlet weak var toastLabel: UILabel!
+  @IBOutlet weak var toastTextField: UITextField!
+  @IBOutlet weak var toastButton: UIButton!
+  
+  // MARK: Method
   
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view, typically from a nib.
     
-    viewModel.PropertyChanged
-    .subscribe(onNext: { (type) in
-      switch type {
-        case TestBindingType.description(let value):
-          print(value)
-        break
-      }
-    })
-    .addDisposableTo(viewModel.Dispose)
-    
-    if let command = viewModel.SubmitCommand {
+    loadViewModel()
+  }
+  
+  func loadViewModel() {
+    setCommand()
+    setBinding()
+  }
+  
+  func setCommand() {
+    if let command = viewModel.ToastCommand {
+      // can you execute this command?
       command.CanExecuteActionChanged
         .subscribe(onNext: { (_) in
-          print("changed")
+          if command.canExecute() {
+            self.toastButton.isEnabled = true
+          }
+          else {
+            self.toastButton.isEnabled = false
+          }
+        })
+        .addDisposableTo(viewModel.Dispose)
+      
+      // command execute
+      toastButton.rx.tap
+        .subscribe(onNext: {
+          command.execute()
         })
         .addDisposableTo(viewModel.Dispose)
     }
     
-    viewModel.testDescription = "hahaha"
-}
+    // delegate
+    viewModel.ToastDelegate
+      .subscribe(onNext: {
+        Toast(text: self.viewModel.toastDescription, delay: 0, duration: 5).show()
+        self.toastTextField.text = ""
+      })
+      .addDisposableTo(viewModel.Dispose)
+  }
+    
+  func setBinding() {
+    // view -> viewmodel
+    toastTextField.rx.text
+      .subscribe(onNext: { value in
+        if value != nil {
+          self.viewModel.toastDescription = value!
+        }
+      })
+      .addDisposableTo(viewModel.Dispose)
+    
+    // viewmodel -> view
+    viewModel.PropertyChanged
+      .subscribe(onNext: { (type) in
+        switch type {
+        case ToastBindingType.description(let value):
+          self.toastLabel.text = value
+          break
+        }
+      })
+      .addDisposableTo(viewModel.Dispose)
+  }
 
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
